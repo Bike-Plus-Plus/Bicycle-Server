@@ -6,6 +6,7 @@ gem 'rails-api'
 
 gem 'pg'
 gem 'activerecord-postgis-adapter'
+gem 'active_model_serializers'
 
 group :test do
   gem 'rspec'
@@ -16,7 +17,7 @@ group :test do
   gem 'json_spec'
 end
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.s2'
+gem 'bcrypt-ruby', '~> 3.1.s2'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

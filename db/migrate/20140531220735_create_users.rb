@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :first_name
       t.string :last_name
       t.string :password_digest
+      t.string :token
       t.references :current_route, index: true
 
       t.timestamps

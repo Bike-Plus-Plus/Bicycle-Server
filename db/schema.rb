@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20140531222255) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "password_digest"
+    t.string   "token"
     t.integer  "current_route_id"
     t.datetime "created_at"
     t.datetime "updated_at"
