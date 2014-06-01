@@ -15,7 +15,7 @@ describe PointsController do
 
     describe 'logged in' do
       let :user do
-        FactoryGirl.build_stubbed(:user)
+        FactoryGirl.create(:user)
       end
 
       before do
@@ -33,6 +33,11 @@ describe PointsController do
           expect do
             post :create, route_id: route, :point => point_params
           end.to change(RoutePoint, :count).by(1)
+        end
+
+        it "should save route for current user" do
+          post :create, route_id: route, :point => point_params
+          expect(RoutePoint.last.user).to eq(user)
         end
 
         it "should change the current value for route" do

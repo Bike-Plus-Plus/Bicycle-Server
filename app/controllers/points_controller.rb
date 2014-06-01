@@ -5,6 +5,7 @@ class PointsController < ApplicationController
     @route = Route.find(params[:route_id])
     @route_point = RoutePoint.new(point_params)
     @route_point.route = @route
+    @route_point.user = current_user
 
     if @route_point.save
       render json: @route_point, status: :created, serializer: PointSerializer

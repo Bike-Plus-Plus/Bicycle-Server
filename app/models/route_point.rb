@@ -1,5 +1,6 @@
 class RoutePoint < ActiveRecord::Base
   belongs_to :route
+  belongs_to :user
 
   before_validation :convert_point
   after_validation :update_route
