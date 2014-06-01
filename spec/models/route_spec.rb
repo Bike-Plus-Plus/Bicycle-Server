@@ -32,4 +32,15 @@ describe Route do
       end
     end
   end
+
+  describe "current" do
+    before do
+      @route = Route.create(:start => "POINT(-118.495338 34.0128358)")
+    end
+
+    it "should copy start to current on create" do
+      expect(@route.current).to be_within_geographic(1).of(34.0128358, -118.495338)
+    end
+  end
+
 end

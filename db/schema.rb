@@ -31,7 +31,9 @@ ActiveRecord::Schema.define(version: 20140531222255) do
     t.spatial  "end",           limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.spatial  "current",       limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.string   "start_address"
-    t.string   "end_address"
+    t.string   "end_address",                                                            default: "f"
+    t.boolean  "in_progress",                                                            default: false
+    t.boolean  "finished"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -7,6 +7,7 @@ gem 'rails-api'
 gem 'pg'
 gem 'activerecord-postgis-adapter'
 gem 'active_model_serializers'
+gem 'virtus'
 
 group :test do
   gem 'rspec'

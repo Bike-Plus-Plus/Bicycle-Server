@@ -9,8 +9,8 @@ class RouteProximityQuery
     @start ||= route.current
   end
 
-  def end
-    @end ||= route.end
+  def endpoint
+    @endpoint ||= route.end
   end
 
   def angle
@@ -26,7 +26,7 @@ class RouteProximityQuery
   end
 
   def angle_diff
-    %{ ABS ( DEGREES ( %s - ST_Azimuth(routes.current, routes.end))) AS angle_diff } % [ angle ]
+    %{ ABS ( DEGREES ( %s - ST_Azimuth(routes.current, routes.end))) } % [ angle ]
   end
 
   def close_by
@@ -42,7 +42,7 @@ class RouteProximityQuery
   end
 
   def on_same_direction
-    %{ angle_diff <= %s } % [ max_angle ]
+    %{ %s <= %s } % [ angle_diff, max_angle_diff ]
   end
 
   def start_range
@@ -52,7 +52,7 @@ class RouteProximityQuery
   def distance_start
     %{
       ST_Distance(routes.current, ST_GeographyFromText('SRID=4326;%s'))
-    } % self.current
+    } % start
   end
 
   def end_range
@@ -62,19 +62,23 @@ class RouteProximityQuery
   def distance_end
     %{
       ST_Distance(routes.end, ST_GeographyFromText('SRID=4326;%s'))
-    } % self.end
+    } % endpoint
+  end
+
+  def not_self
+    %{ id != %s } % [route.id]
   end
 
   def select
-    Route.select("*").select(start_range).select(end_range).select(angle_diff)
+    Route.select("*").select(start_range).select(end_range)
   end
 
   def select_where
-    select.where(close_by).where(on_same_direction)
+    select.where(close_by).where(on_same_direction).where(not_self)
   end
 
   def routes
-    select_where.order_by("end_range ASC")
+    select_where.order("end_range ASC")
   end
 
 end
