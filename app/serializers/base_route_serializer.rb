@@ -1,5 +1,5 @@
 class BaseRouteSerializer < ActiveModel::Serializer
-  attributes :id, :start_latitude, :start_longitude, :end_latitude, :end_longitude, :in_progress
+  attributes :id, :start_latitude, :start_longitude, :end_latitude, :end_longitude, :in_progress, :finished
 
   def start_longitude
     object.start_point.x

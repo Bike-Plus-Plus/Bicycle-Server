@@ -6,10 +6,10 @@ describe RouteForm do
   end
 
   let :route_form do
-    rf = RouteForm.new(:user_id => user.id,
-      :start_latitude => 34.0128358,
+    rf = RouteForm.new(:start_latitude => 34.0128358,
       :start_longitude => -118.495338,
       :end_address => "1520 2nd Street, Santa Monica, CA 90401")
+    rf.user = user
     rf.save
     rf
   end

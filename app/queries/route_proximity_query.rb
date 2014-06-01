@@ -78,7 +78,7 @@ class RouteProximityQuery
   end
 
   def select_where
-    select.where(close_by).where(on_same_direction).where(not_self)
+    select.where(close_by).where(on_same_direction).where(not_self).where(:finished => false)
   end
 
   def routes

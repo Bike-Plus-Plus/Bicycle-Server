@@ -5,7 +5,8 @@ class RouteForm
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attribute :user_id, Integer
+  attr_accessor :user
+
   attribute :start_latitude, BigDecimal
   attribute :start_longitude, BigDecimal
   attribute :end_latitude, BigDecimal
@@ -54,10 +55,6 @@ class RouteForm
 
   def nearby_routes
     @nearby_routes ||= RouteProximityQuery.new(route).routes
-  end
-
-  def user
-    @user ||= User.find(user_id)
   end
 
   def start_point

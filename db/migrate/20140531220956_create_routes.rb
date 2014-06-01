@@ -5,9 +5,9 @@ class CreateRoutes < ActiveRecord::Migration
       t.point :end_point, :geographic => true
       t.point :current, :geographic => true
       t.string :start_address
-      t.string :end_address, :default => false
+      t.string :end_address
       t.boolean :in_progress, :default => false
-      t.boolean :finished
+      t.boolean :finished, :default => false
       t.timestamps
     end
   end

@@ -1,7 +1,7 @@
 class RouteSerializer < BaseRouteSerializer
-  embeds :ids, include: true
+  embed :ids, include: true
 
-  has_one :user
+  has_many :users
   has_many :nearby_routes, serializer: NearbyRouteSerializer
 
 end
