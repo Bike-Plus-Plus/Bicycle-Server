@@ -44,8 +44,8 @@ describe RouteForm do
 
   describe "route" do
     it "should save an object with correct parameters" do
-      expect(route.start).to be_within_geographic(1).of(34.0128358, -118.495338)
-      expect(route.end).to be_within_geographic(1).of(34.0128358, -118.495338)
+      expect(route.start_point).to be_within_geographic(1).of(34.0128358, -118.495338)
+      expect(route.end_point).to be_within_geographic(1).of(34.0128358, -118.495338)
       expect(route.users).to include(user)
       expect(route.current_users).to include(user)
     end

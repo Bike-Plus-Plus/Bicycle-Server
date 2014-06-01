@@ -10,16 +10,16 @@ class Route < ActiveRecord::Base
 
   def geocode_start
     result = Geocoder.search(start_address).first
-    self.start = "POINT(#{result.coordinates[1]} #{result.coordinates[0]})"
+    self.start_point = "POINT(#{result.coordinates[1]} #{result.coordinates[0]})"
   end
 
   def geocode_end
     result = Geocoder.search(end_address).first
-    self.end = "POINT(#{result.coordinates[1]} #{result.coordinates[0]})"
+    self.end_point = "POINT(#{result.coordinates[1]} #{result.coordinates[0]})"
   end
 
   def copy_start_address_to_current
-    self.current = self.start
+    self.current = self.start_point
   end
 
 end

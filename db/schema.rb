@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20140531222255) do
   add_index "route_points", ["route_id"], :name => "index_route_points_on_route_id"
 
   create_table "routes", force: true do |t|
-    t.spatial  "start",         limit: {:srid=>4326, :type=>"point", :geographic=>true}
-    t.spatial  "end",           limit: {:srid=>4326, :type=>"point", :geographic=>true}
+    t.spatial  "start_point",   limit: {:srid=>4326, :type=>"point", :geographic=>true}
+    t.spatial  "end_point",     limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.spatial  "current",       limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.string   "start_address"
     t.string   "end_address",                                                            default: "f"

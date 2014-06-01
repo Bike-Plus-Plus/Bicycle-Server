@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Route do
-  it { should have_db_column(:start) }
-  it { should have_db_column(:end) }
+  it { should have_db_column(:start_point) }
+  it { should have_db_column(:end_point) }
   it { should have_db_column(:current) }
   it { should have_db_column(:start_address) }
   it { should have_db_column(:end_address) }
@@ -17,7 +17,7 @@ describe Route do
       end
 
       it "should geocode start address correctly" do
-        expect(@route.start).to be_within_geographic(200).of(34.0128358, -118.495338)
+        expect(@route.start_point).to be_within_geographic(200).of(34.0128358, -118.495338)
       end
     end
 
@@ -28,14 +28,14 @@ describe Route do
       end
 
       it "should geocode end address correctly" do
-        expect(@route.end).to be_within_geographic(200).of(34.0128358, -118.495338)
+        expect(@route.end_point).to be_within_geographic(200).of(34.0128358, -118.495338)
       end
     end
   end
 
   describe "current" do
     before do
-      @route = Route.create(:start => "POINT(-118.495338 34.0128358)")
+      @route = Route.create(:start_point => "POINT(-118.495338 34.0128358)")
     end
 
     it "should copy start to current on create" do

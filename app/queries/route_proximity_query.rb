@@ -5,16 +5,16 @@ class RouteProximityQuery
 
   attr_reader :route
 
-  def start
-    @start ||= route.current
+  def start_point
+    @start_point ||= route.current
   end
 
-  def endpoint
-    @endpoint ||= route.end
+  def end_point
+    @endpoint ||= route.end_point
   end
 
   def angle
-    @angle ||= Route.select('ST_Azimuth(routes.current, routes.end) AS angle').where(:id => route.id).first.angle
+    @angle ||= Route.select('ST_Azimuth(routes.current, routes.end_point) AS angle').where(:id => route.id).first.angle
   end
 
   def distance_in_meters
@@ -26,7 +26,7 @@ class RouteProximityQuery
   end
 
   def angle_diff
-    %{ ABS ( DEGREES ( %s - ST_Azimuth(routes.current, routes.end))) } % [ angle ]
+    %{ ABS ( DEGREES ( %s - ST_Azimuth(routes.current, routes.end_point))) } % [ angle ]
   end
 
   def close_by
@@ -38,7 +38,7 @@ class RouteProximityQuery
         ST_GeographyFromText('SRID=4326;%s'),
         %d
       )
-    } % [start, distance_in_meters]
+    } % [start_point, distance_in_meters]
   end
 
   def on_same_direction
@@ -52,7 +52,7 @@ class RouteProximityQuery
   def distance_start
     %{
       ST_Distance(routes.current, ST_GeographyFromText('SRID=4326;%s'))
-    } % start
+    } % start_point
   end
 
   def end_range
@@ -61,8 +61,8 @@ class RouteProximityQuery
 
   def distance_end
     %{
-      ST_Distance(routes.end, ST_GeographyFromText('SRID=4326;%s'))
-    } % endpoint
+      ST_Distance(routes.end_point, ST_GeographyFromText('SRID=4326;%s'))
+    } % end_point
   end
 
   def not_self

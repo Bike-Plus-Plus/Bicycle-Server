@@ -25,6 +25,9 @@ class RouteForm
     if valid?
       save_route
       save_user
+      return true
+    else
+      return false
     end
   end
 
@@ -57,8 +60,8 @@ class RouteForm
   def route
     @route ||= begin
       r = Route.new
-      r.start = start_point if start_point
-      r.end = end_point if end_point
+      r.start_point = start_point if start_point
+      r.end_point = end_point if end_point
       r.start_address = start_address if start_address
       r.end_address = end_address if end_address
       r
