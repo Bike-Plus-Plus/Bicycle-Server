@@ -19,11 +19,22 @@ class RoutesController < ApplicationController
     respond_with @route
   end
 
+  def update
+    if @route.update(route_update_params)
+      render nothing: true, status: 204
+    else
+      render json: @route.errors, status: :unprocessable_entity
+    end
+  end
 
   protected
 
   def set_route
     @route = Route.find(params[:id])
+  end
+
+  def route_update_params
+    params.require(:route).permit(:in_progress, :finished)
   end
 
   def route_params

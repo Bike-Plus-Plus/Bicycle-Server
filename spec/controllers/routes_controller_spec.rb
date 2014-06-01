@@ -109,4 +109,74 @@ describe RoutesController do
       end
     end
   end
+
+  describe "PUT update" do
+    let :route do
+      FactoryGirl.create(:route)
+    end
+
+    describe "logged out" do
+      it "should be unauthorized" do
+        put :update, id: route.id
+        response.status.should == 401
+      end
+    end
+
+
+    describe "logged in" do
+
+      let :user do
+        FactoryGirl.build_stubbed(:user)
+      end
+
+      before do
+        controller.stub(:current_user) { user }
+      end
+
+      describe "successful update" do
+        let :route_params do
+          {
+            in_progress: true,
+            finished: false
+          }
+        end
+
+        it "should respond with created code" do
+          put :update, id: route.id, route: route_params
+          response.status.should == 204
+        end
+
+        it "should update the user" do
+          put :update, id: route.id, route: route_params
+          route.reload.in_progress.should == true
+        end
+      end
+
+      describe "with bad parameters" do
+        let :route_params do
+          {
+            in_progress: true,
+            finished: false
+          }
+        end
+
+        before do
+          Route.should_receive(:find).and_return(route)
+          route.should_receive(:update).and_return(false)
+          route.should_receive(:errors).and_return({ :email => "is invalid" })
+        end
+
+        it "should respond with unprocessable entity" do
+          put :update, id: route.id, route: route_params
+          response.status.should == 422
+        end
+
+        it "should wrap around the attribute with an error" do
+          put :update, id: route.id, route: route_params
+          JSON.parse(response.body).should include('email')
+        end
+      end
+    end
+  end
+
 end
