@@ -88,4 +88,65 @@ describe UsersController do
     end
   end
 
+  describe "PUT update" do
+
+    describe "logged out" do
+      it "should be unauthorized" do
+        put :update
+        response.status.should == 401
+      end
+    end
+
+
+    describe "logged in" do
+      let :user do
+        FactoryGirl.create(:user)
+      end
+
+      before do
+        controller.stub(:current_user) { user }
+      end
+
+      describe "successful update" do
+        let :user_params do
+          {
+            first_name: "Bob",
+            last_name: "Benson",
+            email: "bob@bob.com",
+            password: "apples",
+            password_confirmation: "apples"
+          }
+        end
+
+        it "should respond with created code" do
+          put :update, :user => user_params
+          response.status.should == 204
+        end
+
+      end
+
+      describe "with bad parameters" do
+        let :user_params do
+          {
+            first_name: "Bob",
+            last_name: "Benson",
+            email: "bob.com",
+            password: "apples",
+            password_confirmation: "apples"
+          }
+        end
+
+        it "should respond with unprocessable entity" do
+          put :update, :user => user_params
+          response.status.should == 422
+        end
+
+        it "should wrap around the attribute with an error" do
+          put :update, :user => user_params
+          JSON.parse(response.body).should include('email')
+        end
+      end
+    end
+  end
+
 end

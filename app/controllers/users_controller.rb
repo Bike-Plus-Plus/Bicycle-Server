@@ -17,6 +17,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    if current_user.update(user_params)
+      render nothing: true, status: 204
+    else
+      render json: current_user.errors, status: :unprocessable_entity
+    end
+  end
+
   protected
 
   def user_params
