@@ -25,6 +25,10 @@ class RouteProximityQuery
     MAX_ANGLE_DIFF
   end
 
+  def angle_diff_attribute
+    %{ %s AS angle_diff } % [ angle_diff]
+  end
+
   def angle_diff
     %{ ABS ( DEGREES ( %s - ST_Azimuth(routes.current, routes.end_point))) } % [ angle ]
   end
@@ -70,7 +74,7 @@ class RouteProximityQuery
   end
 
   def select
-    Route.select("*").select(start_range).select(end_range)
+    Route.select("*").select(start_range).select(end_range).select(angle_diff_attribute)
   end
 
   def select_where

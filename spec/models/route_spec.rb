@@ -9,6 +9,8 @@ describe Route do
   it { should have_and_belong_to_many(:users) }
   it { should have_many(:current_users) }
   it { should have_many(:route_points) }
+  it { should have_many(:route_connections) }
+  it { should have_many(:nearby_routes).through(:route_connections) }
 
   describe "geocoding" do
     describe "start" do

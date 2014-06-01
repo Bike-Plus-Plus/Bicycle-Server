@@ -4,6 +4,8 @@ class Route < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :current_users, class_name: "User", :inverse_of => :current_route, foreign_key: :current_route_id
   has_many :route_points
+  has_many :route_connections
+  has_many :nearby_routes, :through => :route_connections, class_name: "Route"
   after_validation :geocode_start, if: ->(obj){ obj.start_address.present? and obj.start_address_changed? }
   after_validation :geocode_end, if: ->(obj){ obj.end_address.present? and obj.end_address_changed? }
   before_create :copy_start_address_to_current
