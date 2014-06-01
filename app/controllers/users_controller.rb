@@ -25,6 +25,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    current_user.destroy
+    render json: :no_content
+  end
+
   protected
 
   def user_params

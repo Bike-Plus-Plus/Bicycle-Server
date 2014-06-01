@@ -149,4 +149,35 @@ describe UsersController do
     end
   end
 
+  describe "DELETE destroy" do
+
+    describe "logged out" do
+      it "should be unauthorized" do
+        delete :destroy
+        response.status.should == 401
+      end
+    end
+
+
+    describe "logged in" do
+      let :user do
+        FactoryGirl.create(:user)
+      end
+
+      before do
+        controller.stub(:current_user) { user }
+      end
+
+      it "should respond with created code" do
+        delete :destroy
+        response.status.should == 200
+      end
+
+      it "should delete the user" do
+        delete :destroy
+        expect(User.count).to be(0)
+      end
+
+    end
+  end
 end
