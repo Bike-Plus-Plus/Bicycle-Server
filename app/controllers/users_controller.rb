@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   def destroy
     current_user.destroy
     render json: :no_content
+
   end
 
   protected

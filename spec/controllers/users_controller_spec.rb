@@ -99,7 +99,7 @@ describe UsersController do
 
 
     describe "logged in" do
-      let :user do
+      let! :user do
         FactoryGirl.create(:user)
       end
 
@@ -123,6 +123,10 @@ describe UsersController do
           response.status.should == 204
         end
 
+        it "should update the user" do
+          put :update, :user => user_params
+          user.reload.email.should == "bob@bob.com"
+        end
       end
 
       describe "with bad parameters" do
