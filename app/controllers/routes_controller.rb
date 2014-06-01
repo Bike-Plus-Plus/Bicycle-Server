@@ -1,5 +1,8 @@
 class RoutesController < ApplicationController
   before_action :authenticate
+  before_action :set_route, :only => [:show, :update]
+
+  respond_to :json
 
   def create
     @route_form = RouteForm.new(route_params)
@@ -12,7 +15,16 @@ class RoutesController < ApplicationController
     end
   end
 
+  def show
+    respond_with @route
+  end
+
+
   protected
+
+  def set_route
+    @route = Route.find(params[:id])
+  end
 
   def route_params
     params.require(:route).permit(:start_latitude, :start_longitude, :end_latitude, :end_longitude, :start_address, :end_address)

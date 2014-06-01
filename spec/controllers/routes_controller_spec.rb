@@ -77,4 +77,36 @@ describe RoutesController do
       end
     end
   end
+
+  describe 'GET show' do
+    let :route do
+      FactoryGirl.create(:route)
+    end
+
+    describe 'logged out' do
+      it "should not be authorized" do
+        get :show, id: route.id
+        response.status.should == 401
+      end
+    end
+
+    describe 'logged in' do
+      let :user do
+        FactoryGirl.build_stubbed(:user)
+      end
+
+      before do
+        controller.stub(:current_user) { user }
+        get :show, id: route.id
+      end
+
+      it "should succeed" do
+        response.should be_success
+      end
+
+      it "should wrap around route" do
+        JSON.parse(response.body).should include('route')
+      end
+    end
+  end
 end
