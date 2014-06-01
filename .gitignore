@@ -21,4 +21,4 @@ config/database.yml
 config/initializers/secret_token.rb
 config/initializers/smtp.rb
 config/initializers/api_keys.rb
-spec/fixtures/default_vcr_casette
+spec/fixtures/vcr_cassettes/default_vcr_cassette.yml
