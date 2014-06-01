@@ -15,7 +15,7 @@ describe RoutesController do
       end
 
       let :route do
-        FactoryGirl.build_stubbed(:route)
+        FactoryGirl.create(:route)
       end
 
       before do
