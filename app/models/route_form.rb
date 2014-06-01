@@ -25,6 +25,7 @@ class RouteForm
     if valid?
       save_route
       save_user
+      save_nearby_routes
       return true
     else
       return false
@@ -39,6 +40,16 @@ class RouteForm
   def save_user
     user.current_route = route
     user.save
+  end
+
+  def save_nearby_routes
+    nearby_routes.each do |nearby_route|
+      RouteConnection.create_between(route,
+        nearby_route,
+        nearby_route.start_range,
+        nearby_route.end_range,
+        nearby_route.angle_diff)
+    end
   end
 
   def nearby_routes

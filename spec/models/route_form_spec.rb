@@ -29,7 +29,13 @@ describe RouteForm do
   end
 
   let :double_routes do
-    [double(Route), double(Route) ]
+    (1..2).map do
+      double(Route).tap do |r|
+        r.stub(:start_range) { 4.0 }
+        r.stub(:end_range) { 5.0 }
+        r.stub(:angle_diff) { 6.0 }
+      end
+    end
   end
 
   let :route_proximity_query do
@@ -65,6 +71,7 @@ describe RouteForm do
   describe "nearby_routes" do
     before do
       RouteProximityQuery.should_receive(:new).and_return(route_proximity_query)
+      RouteConnection.should_receive(:create_between).twice
     end
 
     it "should return nearby routes" do
