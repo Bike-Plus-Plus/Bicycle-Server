@@ -34,6 +34,8 @@ describe RoutesController do
         let :route_form do
           mock(RouteForm).tap do |rf|
             rf.stub(:save) { true }
+            rf.stub(:users) { [user]}
+            rf.stub(:nearby_routes) { [] }
             rf.stub(:route) { route }
             rf.stub(:user=) { }
           end

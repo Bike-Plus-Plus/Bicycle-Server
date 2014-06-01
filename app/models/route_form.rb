@@ -65,6 +65,10 @@ class RouteForm
     @end_point ||= "POINT(#{end_longitude} #{end_latitude})" if end_latitude and end_longitude
   end
 
+  def users
+    route.users
+  end
+
   def route
     @route ||= begin
       r = Route.new

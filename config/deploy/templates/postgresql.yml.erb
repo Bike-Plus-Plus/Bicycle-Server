@@ -1,0 +1,9 @@
+<%= fetch :stage %>:
+  adapter: postgis
+  postgis_extension: true
+  encoding: <%= fetch :pg_encoding %>
+  database: <%= fetch :pg_database %>
+  pool: <%= fetch :pg_pool %>
+  username: <%= fetch :pg_user %>
+  password: '<%= fetch :pg_password %>'
+  host: <%= fetch :pg_host %>

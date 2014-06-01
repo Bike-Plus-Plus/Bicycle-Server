@@ -45,3 +45,11 @@ gem 'geocoder'
 # lat = result.coordinates[0]
 # lon = result.coordinates[1]
 #
+
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-postgresql', '~> 3.0'
+  gem 'capistrano-rvm'
+end
+

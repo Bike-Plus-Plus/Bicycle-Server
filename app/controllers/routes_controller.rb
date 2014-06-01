@@ -9,7 +9,7 @@ class RoutesController < ApplicationController
     @route_form.user = current_user
 
     if @route_form.save
-      render json: @route_form.route, status: :created
+      render json: @route_form, status: :created, serializer: RouteFormSerializer
     else
       render json: @route_form.errors, status: :unprocessable_entity
     end
