@@ -15,7 +15,10 @@ group :test do
   gem 'shoulda'
   gem 'factory_girl_rails'
   gem 'json_spec'
+  gem 'vcr'
+  gem 'webmock'
 end
+
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.1.s2'
 

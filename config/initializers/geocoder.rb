@@ -1,1 +1,1 @@
-Geocoder.configure(:lookup => :esri)
+#Geocoder.configure(:lookup => :esri)
