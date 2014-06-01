@@ -30,3 +30,14 @@ gem 'bcrypt-ruby', '~> 3.1.s2'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+# To use geocode with esri
+gem 'geocoder'
+# To use geocoder
+# https://github.com/alexreisner/geocoder
+# requre 'geocoder'
+# Geocoder.configure(:lookup => :esri)
+# result = Geocoder.search("200 N Spring St, Los Angeles, CA 90012")
+# lat = result.coordinates[0]
+# lon = result.coordinates[1]
+#
