@@ -4,6 +4,7 @@ class PointSerializer < ActiveModel::Serializer
   attributes :latitude, :longitude
 
   has_one :route
+  has_one :user
 
   def latitude
     object.point.y

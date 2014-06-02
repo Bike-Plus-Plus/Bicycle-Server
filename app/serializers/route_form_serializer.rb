@@ -3,5 +3,5 @@ class RouteFormSerializer < ActiveModel::Serializer
 
   has_one :route, serializer: RouteFormRouteSerializer
   has_many :users
-  has_many :nearby_routes, serializer: NearbyRouteSerializer
+  has_many :nearby_routes, serializer: NearbyRouteSerializer, key: "routes"
 end

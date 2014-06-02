@@ -24,4 +24,28 @@ class Route < ActiveRecord::Base
     self.current = self.start_point
   end
 
+  def start_longitude
+    self.start_point.x
+  end
+
+  def start_latitude
+    self.start_point.y
+  end
+
+  def end_longitude
+    self.end_point.x
+  end
+
+  def end_latitude
+    self.end_point.y
+  end
+
+  def current_longitude
+    self.current.x
+  end
+
+  def current_latitude
+    self.current.y
+  end
+
 end

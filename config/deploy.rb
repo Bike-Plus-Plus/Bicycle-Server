@@ -2,7 +2,7 @@ set :application, 'bicycle_server'
 
 set :pg_ask_for_password, true
 
-set :deploy_to, "/var/www/bikeplusplus.com"
+set :deploy_to, "/var/www/plusplus.bike"
 set :scm, 'git'
 set :scm_verbose, true
 set :repo_url,  "git@github.com:Bike-Plus-Plus/Bicycle-Server.git"

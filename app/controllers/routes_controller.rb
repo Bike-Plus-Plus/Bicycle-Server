@@ -16,7 +16,7 @@ class RoutesController < ApplicationController
   end
 
   def show
-    respond_with @route
+    render json: @route
   end
 
   def update
