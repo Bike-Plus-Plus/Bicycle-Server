@@ -49,4 +49,52 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
 
   after 'deploy:publishing', 'deploy:restart'
+
+  task :make_scripts_runnable do
+    on roles(:web) do
+      execute :chown, "root:#{fetch(:group)} #{release_path}/scripts/*"
+      execute :chmod, "ug+x #{release_path}/scripts/*"
+    end
+  end
+
+  task :make_tmp_writable do
+    on roles(:web) do
+      execute :chown, "#{fetch(:runner)}:#{fetch(:group)} #{release_path}/tmp"
+      execute :mkdir, "-p #{release_path}/tmp/cache/assets/#{fetch(:stage)}"
+      execute :chown, "-R #{fetch(:runner)}:#{fetch(:group)} #{release_path}/tmp/cache"
+      execute :chmod, "-R ug+ws #{release_path}/tmp/cache"
+    end
+  end
+  before "deploy:restart", "deploy:make_tmp_writable"
+
+  task :make_sitemap_writable do
+    on roles(:web) do
+      file = "#{release_path}/public/sitemap.xml"
+      execute :touch, "{file}"
+      execute :chown, "#{fetch(:runner)}:#{fetch(:group)} #{file}"
+      execute :chmod, "g+rw #{file}"
+    end
+  end
+
+  task :set_permissions do
+    on roles(:web) do
+      execute :mkdir, "-p #{release_path}/tmp/cache/assets/#{fetch(:stage)}"
+      execute :chown, "-R #{fetch(:runner)}:#{fetch(:group)} #{release_path}/tmp/cache"
+      execute :chmod, "-R ug+ws #{release_path}/tmp/cache"
+    end
+  end
+
+  task :set_app_ownership do
+    on roles(:web) do
+      execute :chown, "#{fetch(:runner)}:#{fetch(:group)} #{release_path}/config/application.rb"
+      execute :chown, "#{fetch(:runner)}:#{fetch(:group)} #{shared_path}/log/*.log"
+      execute :chmod, "ug+rwx #{shared_path}/db_backups"
+      execute :chmod, "ug+rwx #{shared_path}/log"
+      execute :chmod, "0666 #{shared_path}/log/*.log"
+    end
+  end
+  before "deploy:assets:precompile", 'deploy:set_app_ownership'
+
+
+  after "deploy:assets:precompile", "deploy:set_permissions"
 end
