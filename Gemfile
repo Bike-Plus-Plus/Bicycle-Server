@@ -5,7 +5,8 @@ gem 'rails', '4.1.2.rc1'
 gem 'rails-api'
 
 gem 'pg'
-gem 'activerecord-postgis-adapter'
+gem 'rgeo-activerecord', :github => "hannahhoward/rgeo-activerecord"
+gem 'activerecord-postgis-adapter', :github => "hannahhoward/activerecord-postgis-adapter"
 gem 'active_model_serializers'
 gem 'virtus'
 

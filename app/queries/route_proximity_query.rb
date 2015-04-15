@@ -13,8 +13,13 @@ class RouteProximityQuery
     @endpoint ||= route.end_point
   end
 
+  def table
+    @table ||= Route.arel_table
+  end
+
   def angle
-    @angle ||= Route.select('ST_Azimuth(routes.current, routes.end_point) AS angle').where(:id => route.id).first.angle
+
+    @angle ||= Route.select(table[:current].st_azimuth(table[:end_point]).as('angle')).where(:id => route.id).first.angle
   end
 
   def distance_in_meters
@@ -26,51 +31,51 @@ class RouteProximityQuery
   end
 
   def angle_diff_attribute
-    %{ %s AS angle_diff } % [ angle_diff]
+    angle_diff.as('angle_diff')
+  end
+
+  def raw_angle_diff
+    Arel::Nodes::Subtraction.new(angle,table[:current].st_azimuth(table[:end_point]))
+  end
+
+  def abs_angle_diff
+    Arel::Nodes::NamedFunction.new 'ABS', [degrees_angle_diff]
+  end
+
+  def degrees_angle_diff
+    Arel::Nodes::NamedFunction.new "DEGREES", [raw_angle_diff]
   end
 
   def angle_diff
-    %{ ABS ( DEGREES ( %s - ST_Azimuth(routes.current, routes.end_point))) } % [ angle ]
+    abs_angle_diff
   end
 
   def close_by
-    %{
-      ST_DWithin(
-        ST_GeographyFromText(
-          'SRID=4326;' || ST_AsText(routes.current)
-        ),
-        ST_GeographyFromText('SRID=4326;%s'),
-        %d
-      )
-    } % [start_point, distance_in_meters]
+    table[:current].st_dwithin(start_point, distance_in_meters);
   end
 
   def on_same_direction
-    %{ %s <= %s } % [ angle_diff, max_angle_diff ]
+    Arel::Nodes::LessThanOrEqual.new(angle_diff, max_angle_diff)
   end
 
   def start_range
-    %{ %s / %s AS start_range} % [distance_start, METERS_IN_A_MILE]
+    Arel::Nodes::Division.new(distance_start, METERS_IN_A_MILE).as('start_range')
   end
 
   def distance_start
-    %{
-      ST_Distance(routes.current, ST_GeographyFromText('SRID=4326;%s'))
-    } % start_point
+    table[:current].st_distance(start_point)
   end
 
   def end_range
-    %{ %s / %s AS end_range} % [distance_end, METERS_IN_A_MILE]
+    Arel::Nodes::Division.new(distance_end, METERS_IN_A_MILE).as('end_range')
   end
 
   def distance_end
-    %{
-      ST_Distance(routes.end_point, ST_GeographyFromText('SRID=4326;%s'))
-    } % end_point
+    table[:end_point].st_distance(end_point)
   end
 
   def not_self
-    %{ id != %s } % [route.id]
+    table[:id].not_eq(route.id)
   end
 
   def select

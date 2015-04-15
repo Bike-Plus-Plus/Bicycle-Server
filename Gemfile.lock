@@ -1,3 +1,19 @@
+GIT
+  remote: git://github.com/hannahhoward/activerecord-postgis-adapter.git
+  revision: c47a003ee7be96c1656f9383354d7ced1870c81a
+  specs:
+    activerecord-postgis-adapter (2.1.0)
+      activerecord (~> 4.0)
+      rgeo-activerecord (~> 1.1.0)
+
+GIT
+  remote: git://github.com/hannahhoward/rgeo-activerecord.git
+  revision: 304ad78dd5fea21522762cefbe9fb4d1e0dd0518
+  specs:
+    rgeo-activerecord (1.1.0)
+      activerecord (~> 4.0)
+      rgeo (~> 0.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -23,9 +39,6 @@ GEM
       activemodel (= 4.1.2.rc1)
       activesupport (= 4.1.2.rc1)
       arel (~> 5.0.0)
-    activerecord-postgis-adapter (2.0.1)
-      activerecord (~> 4.0)
-      rgeo-activerecord (~> 1.0.0)
     activesupport (4.1.2.rc1)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
@@ -115,9 +128,6 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
     rgeo (0.3.20)
-    rgeo-activerecord (1.0.0)
-      activerecord (~> 4.0)
-      rgeo (~> 0.3.20)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -177,7 +187,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  activerecord-postgis-adapter
+  activerecord-postgis-adapter!
   bcrypt-ruby (~> 3.1.s2)
   capistrano
   capistrano-postgresql (~> 3.0)
@@ -190,6 +200,7 @@ DEPENDENCIES
   pg
   rails (= 4.1.2.rc1)
   rails-api
+  rgeo-activerecord!
   rspec
   rspec-rails
   shoulda
